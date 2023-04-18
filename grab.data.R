@@ -1,4 +1,3 @@
-
 grab.data <- function(path) {
   require(dplyr)
   require(tidyverse)
@@ -27,19 +26,19 @@ grab.data <- function(path) {
   
   
   
-  survey <- mydata[mydata$trial_type == "survey-html-form",]
+  survey <- mydata[mydata$trial_type == "survey-html-form" & "age" %in% mydata$response ,]
   if(nrow(survey) > 0){
-  JSONcolumn_data <-  survey %>% 
-    select(response)  %>% 
-    map_dfc(.f = ParseJSONColumn)
-  
-  survey <- cbind(survey, JSONcolumn_data)
-  survey <- survey[,c("ID", colnames(JSONcolumn_data))]
-  mydata <- merge(mydata, survey, by = "ID", all.x = T)
-  
-  mydata <- mydata %>% 
-    group_by(ID) %>%
-    mutate(age = max(age, na.rm = T))
+    JSONcolumn_data <-  survey %>% 
+      select(response)  %>% 
+      map_dfc(.f = ParseJSONColumn)
+    
+    survey <- cbind(survey, JSONcolumn_data)
+    survey <- survey[,c("ID", colnames(JSONcolumn_data))]
+    mydata <- merge(mydata, survey, by = "ID", all.x = T)
+    
+    mydata <- mydata %>% 
+      group_by(ID) %>%
+      mutate(age = max(age, na.rm = T))
   }
   
   return(mydata)
