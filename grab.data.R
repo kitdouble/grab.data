@@ -26,7 +26,7 @@ grab.data <- function(path) {
   
   
   
-  survey <- mydata[mydata$trial_type == "survey-html-form" & "age" %in% mydata$response ,]
+  survey <- mydata[mydata$trial_type == "survey-html-form",]
   if(nrow(survey) > 0){
     JSONcolumn_data <-  survey %>% 
       select(response)  %>% 
