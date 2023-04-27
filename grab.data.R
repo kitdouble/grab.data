@@ -1,4 +1,4 @@
-grab.data <- function(path) {
+grab.data <- function(path, surveycapture = T) {
   require(dplyr)
   require(tidyverse)
   require(jsonlite)
@@ -16,16 +16,16 @@ grab.data <- function(path) {
     
   }
   
-  rm(list=setdiff(ls(), "mydata"))
   
   
+  if(surveycapture == T){
   ParseJSONColumn <- function(x)  {
     str_c("[ ", str_c(x, collapse = ",", sep=" "), " ]")  %>% 
       fromJSON(flatten = T) %>% 
       as_tibble()}
   
   
-  
+
   survey <- mydata[mydata$trial_type == "survey-html-form",]
   if(nrow(survey) > 0){
     JSONcolumn_data <-  survey %>% 
@@ -39,6 +39,7 @@ grab.data <- function(path) {
     mydata <- mydata %>% 
       group_by(ID) %>%
       mutate(age = max(age, na.rm = T))
+  }
   }
   
   return(mydata)
