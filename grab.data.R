@@ -1,3 +1,36 @@
+download_osf_data <- function(node){
+# Download from OSF
+require(osfr)
+
+# Verify Access token is loaded
+Sys.getenv("OSF_PAT")
+
+# List files
+psych_rp <- osf_retrieve_node(node)
+psych_rp <- osf_ls_files(psych_rp)
+psych_rp[1,]
+
+# Download files
+x <- osf_download(psych_rp, conflicts = "overwrite")
+
+# List Files
+filenames <- x$local_path
+
+# Merge Files
+for(i in 1:length(filenames)){
+  a <- read.csv(filenames[[i]])
+  if(i == 1) mydata <- a
+  if(i != 1) mydata <- plyr::rbind.fill(mydata,a)
+  
+}
+
+
+return(mydata)
+
+}
+
+
+# Merge Local Data
 grab.data <- function(path, surveycapture = T) {
   require(dplyr)
   require(tidyverse)
