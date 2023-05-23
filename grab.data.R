@@ -7,8 +7,8 @@ Sys.getenv("OSF_PAT")
 
 # List files
 psych_rp <- osf_retrieve_node(node)
-psych_rp <- osf_ls_files(psych_rp)
-psych_rp[1,]
+psych_rp <- osf_ls_files(psych_rp, n_max = Inf)
+
 
 # Download files
 x <- osf_download(psych_rp, conflicts = "overwrite")
