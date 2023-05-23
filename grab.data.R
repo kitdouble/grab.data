@@ -19,6 +19,7 @@ filenames <- x$local_path
 # Merge Files
 for(i in 1:length(filenames)){
   a <- read.csv(filenames[[i]])
+  unlink(filenames[[i]])
   if(i == 1) mydata <- a
   if(i != 1) mydata <- plyr::rbind.fill(mydata,a)
   
