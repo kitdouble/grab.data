@@ -35,7 +35,7 @@ download_osf_data <- function(node, conflicts = "skip", delete_files = F){
 
 
 # Merge Local Data
-grab.data <- function(path, surveycapture = T) {
+grab.data <- function(path, surveycapture = T, add_id = F) {
   require(dplyr)
   require(tidyverse)
   require(jsonlite)
@@ -48,6 +48,7 @@ grab.data <- function(path, surveycapture = T) {
   
   for(i in 1:length(filenames)){
     a <- read.csv(filenames[[i]])
+    if(add_id ==T) a$ID = i
     if(i == 1) mydata <- a
     if(i != 1) mydata <- plyr::rbind.fill(mydata,a)
     
