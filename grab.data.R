@@ -9,7 +9,14 @@ download_osf_data <- function(node, conflicts = "skip", delete_files = F){
   # List files
   psych_rp <- osf_retrieve_node(node)
   psych_rp <- osf_ls_files(psych_rp, n_max = Inf)
-  #psych_rp <- psych_rp[!duplicated(psych_rp$name),]
+
+
+   for(i in 1:nrow(psych_rp)){
+  if(psych_rp$meta[[i]]$links$download != paste("https://osf.io/download/", psych_rp$id[i], "/" , sep = "")) {print("Warning IDs don't match be careful!")}
+  }
+
+  
+  psych_rp <- psych_rp[!duplicated(psych_rp$name),]
   
   
   # Download files
