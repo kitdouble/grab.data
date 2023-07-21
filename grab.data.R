@@ -9,7 +9,7 @@ download_osf_data <- function(node, conflicts = "skip", delete_files = F){
   # List files
   psych_rp <- osf_retrieve_node(node)
   psych_rp <- osf_ls_files(psych_rp, n_max = Inf)
-  psych_rp <- psych_rp[!duplicated(psych_rp$name),]
+  #psych_rp <- psych_rp[!duplicated(psych_rp$name),]
   
   
   # Download files
