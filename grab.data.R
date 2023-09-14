@@ -29,7 +29,7 @@ download_osf_data <- function(node, conflicts = "skip", delete_files = F, add_id
   # Merge Files
   for(i in 1:length(filenames)){
     a <- read.csv(filenames[[i]])
-    if(add_id ==T) a$ID = filenames[[i]]
+    if(add_id ==T) a$participant_id = filenames[[i]]
     if(delete_files == T) {unlink(filenames[[i]])}
     if(i == 1) mydata <- a
     if(i != 1) mydata <- plyr::rbind.fill(mydata,a)
